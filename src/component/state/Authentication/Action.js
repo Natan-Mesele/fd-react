@@ -14,7 +14,7 @@ import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
 } from "./ActionType";
-import { api, API_URL } from "../../config/api";
+import api, { API_URL } from "../../config/api";
 
 export const registerUser = (reqData) => async (dispatch) => {
   dispatch({ type: REGISTER_REQUEST });

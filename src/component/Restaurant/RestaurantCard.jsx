@@ -3,13 +3,13 @@ import React from 'react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
-function RestaurantCard() {
+function RestaurantCard({item}) {
   return (
     <Card className='m-5 w-[18rem]'>
       <div className={`${true ? 'cursor-pointer' : 'cursor-not-allowed'} relative`}>
         <img 
           className='w-full h-[10rem] rounded-t-md object-cover'
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQV3V_QmFRmB8xPPSOmShms0tMMMAH1G9i7pg&s" 
+          src={item.images[0]} 
           alt="" 
         />
         <Chip
@@ -19,11 +19,11 @@ function RestaurantCard() {
           label={true ? 'open' : 'closed'}
         />
       </div>
-      <div className='p-4 textpart lg:flex w-full justify-between'>
+      <div className='p-4 textpart lg:flex w-full justify-between text-left'>
         <div className='space-y-1'>
-          <p className='font-semibold text-lg'>Ethiopia fast Food</p>
+          <p className='font-semibold text-lg'>{item.name}</p>
           <p className='text-gray-500 text-sm'>
-            Craving it all? Dive into our global fla...
+            {item.description}
           </p>
         </div>
         <div>

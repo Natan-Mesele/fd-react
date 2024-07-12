@@ -1,3 +1,4 @@
+import { LOGOUT } from "../Authentication/ActionType";
 import * as actionType from "./ActionType";
 
 const initialState = {
