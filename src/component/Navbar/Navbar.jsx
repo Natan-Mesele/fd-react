@@ -5,14 +5,24 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { pink } from "@mui/material/colors";
 import { Person } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export const Navbar = () => {
+  const {auth} = useSelector(store=>store)
   const navigate = useNavigate();
+
+  const handleAvatarClick=()=> {
+    if(auth.user?.role==="ROLE_CUSTOMER"){
+      navigate("/my-profile")
+    }else {
+      navigate("/admin/restaurant")
+    }
+  }
   return (
     <Box className="sticky top-0 z-50">
       <nav className="bg-[#3d3d3d] px-5 py-3 flex justify-between items-center lg:px-20">
       <div className="flex items-center space-x-4 lg:mr-10 cursor-pointer">
-        <li className="logo font-semibold text-gray-300 text-2xl list-none">Natty Food</li>
+        <li onClick={()=>navigate("/")} className="logo font-semibold text-gray-300 text-2xl list-none">Natty Food</li>
       </div>
       <div className="flex items-center space-x-2 lg:space-x-10">
         <div>
@@ -21,16 +31,18 @@ export const Navbar = () => {
           </IconButton>
         </div>
         <div>
-          {false?<Avatar
+          {auth.user? (
+          < Avatar onClick={handleAvatarClick}
             className="bg-white text-[#964e66] hover:bg-[#f1f1f1] transition-all duration-300"
             sx={{ width: 40, height: 40 }}
           >
-            N
-          </Avatar>:
+            {auth.user?.fullName[0].toUpperCase()}
+          </Avatar>
+          ):(
         <IconButton onClick={()=> navigate("/account/login")}>
           <Person/>
         </IconButton>  
-        }
+        )}
         </div>
         <div>
           <IconButton className="hover:bg-[#f1f1f1] rounded-full">
