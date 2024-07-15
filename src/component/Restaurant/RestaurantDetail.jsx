@@ -44,7 +44,7 @@ export const RestaurantDetail = () => {
     dispatch(getRestaurantById({ jwt, restaurantId: id }));
     dispatch(getRestaurantsCategory({jwt, restaurantId:id}))
     dispatch(getMenuItemsByRestaurantId({jwt, restaurantId: id, vegetarian:false, nonveg:false, seasonal:true}))
-  }, []);
+  }, [])
 
   return (
     <div className="px-5 lg:px-20">
