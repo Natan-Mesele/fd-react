@@ -7,12 +7,14 @@ import {
   RadioGroup,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import MenuCard from "./MenuCard";
-
-const categories = ["Pizza", "Burger", "Chicken", "Rice"];
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getRestaurantById, getRestaurantsCategory } from "../state/Restaurant/Action";
+import { getMenuItemsByRestaurantId } from "../state/Menu/Action";
 
 const foodTypes = [
   { label: "All", value: "all" },
@@ -25,10 +27,24 @@ const menu = [1, 2, 3, 4, 5];
 
 export const RestaurantDetail = () => {
   const [foodType, setFoodType] = useState("all");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const jwt = localStorage.getItem("jwt");
+  const { auth, restaurant } = useSelector((store) => store);
+
+  const { id, city } = useParams();
 
   const handleFilter = (e) => {
     console.log(e.target.value, e.target.name);
   };
+
+  console.log("restaurant", restaurant);
+
+  useEffect(() => {
+    dispatch(getRestaurantById({ jwt, restaurantId: id }));
+    dispatch(getRestaurantsCategory({jwt, restaurantId:id}))
+    dispatch(getMenuItemsByRestaurantId({jwt, restaurantId: id, vegetarian:false, nonveg:false, seasonal:true}))
+  }, []);
 
   return (
     <div className="px-5 lg:px-20">
@@ -41,33 +57,30 @@ export const RestaurantDetail = () => {
             <Grid item xs={12}>
               <img
                 className="w-full h-[40vh] object-cover"
-                src="https://t4.ftcdn.net/jpg/02/94/26/33/360_F_294263329_1IgvqNgDbhmQNgDxkhlW433uOFuIDar4.jpg"
+                src={restaurant.restaurant?.images[0]}
                 alt=""
               />
             </Grid>
             <Grid item xs={12} lg={6}>
               <img
                 className="w-full h-[40vh] object-cover"
-                src="https://media.istockphoto.com/id/1081422898/photo/pan-fried-duck.jpg?s=612x612&w=0&k=20&c=kzlrX7KJivvufQx9mLd-gMiMHR6lC2cgX009k9XO6VA="
+                src={restaurant.restaurant?.images[0]}
                 alt=""
               />
             </Grid>
             <Grid item xs={12} lg={6}>
               <img
                 className="w-full h-[40vh] object-cover"
-                src="https://media.istockphoto.com/id/959584318/photo/making-dinner-into-a-masterpiece.jpg?s=612x612&w=0&k=20&c=5sadZdufW-4j_ZmV3XM8KSZXRFcYRD-Nmh0vqTkIS7Y="
+                src={restaurant.restaurant?.images[0]}
                 alt=""
               />
             </Grid>
           </Grid>
         </div>
         <div className="pt-3 pb-5 text-left">
-          <h1 className="text-4xl font-semibold">Ethiopia fast food</h1>
+          <h1 className="text-4xl font-semibold">{restaurant.restaurant?.name}</h1>
           <p className="text-gray-500 mt-1">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit sunt
-            similique ea suscipit veniam quod fugiat quo in modi quae alias unde
-            sapiente repudiandae, debitis eaque, officia pariatur rem
-            voluptatum?
+            {restaurant.restaurant?.description}
           </p>
           <div className="space-y-3 mt-3">
             <p className="text-gray-500 flex items-center gap-3">
@@ -117,12 +130,12 @@ export const RestaurantDetail = () => {
                   name="food_type"
                   value={foodType || "all"}
                 >
-                  {categories.map((item) => (
+                  {restaurant.categories.map((item) => (
                     <FormControlLabel
                       key={item}
                       value={item}
                       control={<Radio />}
-                      label={item}
+                      label={item.name}
                     />
                   ))}
                 </RadioGroup>

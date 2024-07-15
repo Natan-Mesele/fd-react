@@ -283,13 +283,13 @@ export const getRestaurantsCategory = ({ jwt, restaurantId }) => {
   return async (dispatch) => {
     dispatch({ type: GET_RESTAURANTS_CATEGORY_REQUEST });
     try {
-      const { data } = await api.get(`/api/admin/category/${restaurantId}`, {
+      const res = await api.get(`/api/category/restaurant/${restaurantId}`, {
         headers: {
           Authorization: `Bearer ${jwt}`,
         },
       });
-      dispatch({ type: GET_RESTAURANTS_CATEGORY_SUCCESS, payload: data });
-      console.log("get restaurant category", data);
+      dispatch({ type: GET_RESTAURANTS_CATEGORY_SUCCESS, payload: res.data });
+      console.log("get restaurant category", res.data);
     } catch (error) {
       console.log("catch error", error);
       dispatch({ type: GET_RESTAURANTS_CATEGORY_FAILURE, payload: error });

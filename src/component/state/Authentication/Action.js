@@ -81,7 +81,7 @@ export const addToFavorite =
     dispatch({ type: ADD_TO_FAVORITE_REQUEST });
     try {
       const { data } = await api.put(
-        `/api/restaurants/${restaurantId}/add-favorite`,
+        `/api/restaurants/${restaurantId}/add-favorites`,
         {},
         {
           headers: {

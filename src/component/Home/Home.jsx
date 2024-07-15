@@ -4,6 +4,7 @@ import { MultipleItemCau } from "./MultipleItemCau";
 import RestaurantCard from "../Restaurant/RestaurantCard";
 import { getAllRestaurantsAction } from "../state/Restaurant/Action";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const restaurants = [1, 1, 1, 1, 1, 1];
 
@@ -11,12 +12,15 @@ export const Home = () => {
   const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt");
   const {restaurant} = useSelector(store=>store)
+  const navigate = useNavigate()
 
   console.log("restaurant", restaurant)
 
   useEffect(() => {
     dispatch(getAllRestaurantsAction(jwt));
   }, []);
+
+  
   return (
     <div className="pb-10 ">
       <section className="banner -z-50 relative flex flex-col justify-center items-center">
