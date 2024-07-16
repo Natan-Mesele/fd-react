@@ -13,7 +13,10 @@ import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import MenuCard from "./MenuCard";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getRestaurantById, getRestaurantsCategory } from "../state/Restaurant/Action";
+import {
+  getRestaurantById,
+  getRestaurantsCategory,
+} from "../state/Restaurant/Action";
 import { getMenuItemsByRestaurantId } from "../state/Menu/Action";
 
 const foodTypes = [
@@ -42,9 +45,18 @@ export const RestaurantDetail = () => {
 
   useEffect(() => {
     dispatch(getRestaurantById({ jwt, restaurantId: id }));
-    dispatch(getRestaurantsCategory({jwt, restaurantId:id}))
-    dispatch(getMenuItemsByRestaurantId({jwt, restaurantId: id, vegetarian:false, nonveg:false, seasonal:true}))
-  }, [])
+    dispatch(getRestaurantsCategory({ jwt, restaurantId: id }));
+    dispatch(
+      getMenuItemsByRestaurantId({
+        jwt,
+        restaurantId: id,
+        vegetarian: false,
+        nonveg: false,
+        seasonal: false,
+        foodCategory: "",
+      })
+    );
+  }, []);
 
   return (
     <div className="px-5 lg:px-20">
@@ -78,7 +90,9 @@ export const RestaurantDetail = () => {
           </Grid>
         </div>
         <div className="pt-3 pb-5 text-left">
-          <h1 className="text-4xl font-semibold">{restaurant.restaurant?.name}</h1>
+          <h1 className="text-4xl font-semibold">
+            {restaurant.restaurant?.name}
+          </h1>
           <p className="text-gray-500 mt-1">
             {restaurant.restaurant?.description}
           </p>
