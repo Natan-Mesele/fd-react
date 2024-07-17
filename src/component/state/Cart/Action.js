@@ -11,7 +11,7 @@ export const findCart = (token) => {
           },
         });
         dispatch({ type: FIND_CART_SUCCESS, payload: response.data });
-        console.log("find cart", data);
+        console.log("find cart", response.data);
       } catch (error) {
         console.log("catch error", error);
         dispatch({ type: FIND_CART_FAILURE, payload: error });
@@ -29,7 +29,7 @@ export const findCart = (token) => {
           },
         });
         dispatch({ type: GET_ALL_CART_ITEMS_SUCCESS, payload: response.data });
-        console.log("get all cart items", data);
+        console.log("get all cart items", response.data);
       } catch (error) {
         console.log("catch error", error);
         dispatch({ type: GET_ALL_CART_ITEMS_FAILURE, payload: error });
@@ -41,12 +41,12 @@ export const findCart = (token) => {
     return async (dispatch) => {
       dispatch({ type: ADD_ITEM_TO_CART_REQUEST});
       try {
-        const response = await api.put(`/api/cart/add`, reqData.cartItem, {
+        const {data} = await api.put(`/api/cart/add`, reqData.cartItem, {
           headers: {
             Authorization: `Bearer ${reqData.token}`,
           },
         });
-        dispatch({ type: ADD_ITEM_TO_CART_SUCCESS, payload: data });
+        dispatch({ type: ADD_ITEM_TO_CART_SUCCESS, payload:data});
         console.log("add item to cart", data);
       } catch (error) {
         console.log("catch error", error);
@@ -59,9 +59,9 @@ export const findCart = (token) => {
     return async (dispatch) => {
       dispatch({ type: UPDATE_CARTITEM_REQUEST});
       try {
-        const response = await api.put(`/api/cart-item/update`, reqData.data, {
+        const {data} = await api.put(`/api/cart-item/update`, reqData.data, {
           headers: {
-            Authorization: `Bearer ${reqData.token}`,
+            Authorization: `Bearer ${reqData.jwt}`,
           },
         });
         dispatch({ type: UPDATE_CARTITEM_SUCCESS, payload: data });
@@ -79,11 +79,11 @@ export const findCart = (token) => {
       try {
         const response = await api.delete(`/api/cart-item/${cartItemId}/remove`, {
           headers: {
-            Authorization: `Bearer ${reqData.token}`,
+            Authorization: `Bearer ${jwt}`,
           },
         });
         dispatch({ type: REMOVE_CARTITEM_SUCCESS, payload: cartItemId });
-        console.log("remove cart item", data);
+        console.log("remove cart item", response.data);
       } catch (error) {
         console.log("catch error", error);
         dispatch({ type: REMOVE_CARTITEM_FAILURE, payload: error.message });
