@@ -21,7 +21,7 @@ import {
     },
   ];
   
-  function MenuCard() {
+  function MenuCard({item}) {
 
     const handleCheckBoxChange = (value) => {
         console.log("value");
@@ -37,13 +37,13 @@ import {
             <div className="lg:flex items-center lg:gap-5">
               <img
                 className="w-[7rem] h-[7rem] object-cover"
-                src="https://img.freepik.com/free-photo/grilled-gourmet-burger-with-cheese-tomato-onion-french-fries-generated-by-artificial-intelligence_25030-63181.jpg"
+                src={item.images[0]}
                 alt=""
               />
               <div className="space-y-1 lg:space-y-5 lg:max-w-2xl">
-                <p className="font-semibold text-x1">Burger</p>
-                <p>$499</p>
-                <p className="text-gray-400">Nice food</p>
+                <p className="font-semibold text-x1"></p>
+                <p>${item.price}</p>
+                <p className="text-gray-400">{item.description}</p>
               </div>
             </div>
           </div>

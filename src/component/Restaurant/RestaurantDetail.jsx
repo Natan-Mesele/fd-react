@@ -26,14 +26,14 @@ const foodTypes = [
   { label: "Seasonal", value: "seasonal" },
 ];
 
-const menu = [1, 2, 3, 4, 5];
+
 
 export const RestaurantDetail = () => {
   const [foodType, setFoodType] = useState("all");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt");
-  const { auth, restaurant } = useSelector((store) => store);
+  const { auth, restaurant, menu } = useSelector(store => store);
 
   const { id, city } = useParams();
 
@@ -62,7 +62,7 @@ export const RestaurantDetail = () => {
     <div className="px-5 lg:px-20">
       <section>
         <h3 className="text-gray-500 py-2 mt-10">
-          Home/Ethiopia/Ethiopia fast food/3
+          Home/Ethiopia/Ethiopia fast food/3 asdddds
         </h3>
         <div>
           <Grid container spacing={2}>
@@ -158,9 +158,9 @@ export const RestaurantDetail = () => {
           </div>
         </div>
         <div className="space-y-5 lg:w-[80%] lg:pl-10">
-          {menu.map((item, index) => (
-            <MenuCard key={index} />
-          ))}
+          {menu.menuItems.map((item) => 
+            <MenuCard item={item} />
+          )}
         </div>
       </section>
     </div>
