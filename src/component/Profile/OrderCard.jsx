@@ -1,22 +1,22 @@
 import { Button, Card } from "@mui/material";
 import React from "react";
 
-function OrderCard() {
+function OrderCard({item,order}) {
   return (
     <Card className="flex justify-between items-center p-5">
       <div className="flex items-center space-x-5">
         <img
         className="h-16 w-16"
-          src="https://media.istockphoto.com/id/1442417585/photo/person-getting-a-piece-of-cheesy-pepperoni-pizza.jpg?s=612x612&w=0&k=20&c=k60TjxKIOIxJpd4F4yLMVjsniB4W1BpEV4Mi_nb4uJU="
+          src={item.food.images[0]}
           alt=""
         />
         <div className="text-left">
-            <p>Biryani</p>
-            <p>$546</p>
+            <p>{item.food.name}</p>
+            <p>${item.totalPrice}</p>
         </div>
       </div>
       <div>
-        <Button desabled className="cursor-not-allowed">completed</Button>
+        <Button desabled className="cursor-not-allowed">{order.orderStatus}</Button>
       </div>
     </Card>
   );

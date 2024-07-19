@@ -11,7 +11,7 @@ export const findCart = (token) => {
           },
         });
         dispatch({ type: FIND_CART_SUCCESS, payload: response.data });
-        console.log("find cart", response.data);
+        console.log("my cart", response.data);
       } catch (error) {
         console.log("catch error", error);
         dispatch({ type: FIND_CART_FAILURE, payload: error });

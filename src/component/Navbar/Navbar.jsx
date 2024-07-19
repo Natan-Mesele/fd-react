@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 export const Navbar = () => {
-  const { auth } = useSelector((store) => store);
+  const { auth, cart } = useSelector((store) => store);
   const navigate = useNavigate();
 
   const handleAvatarClick = () => {
@@ -49,10 +49,10 @@ export const Navbar = () => {
             )}
           </div>
           <div>
-            <IconButton className="hover:bg-[#f1f1f1] rounded-full">
+            <IconButton onClick={()=>navigate("/cart")} className="hover:bg-[#f1f1f1] rounded-full">
               <Badge
                 color="primary"
-                badgeContent={3}
+                badgeContent={cart.cart?.items?.length}
                 className="text-white bg-gray-200 px-1 py-[2px] rounded-full text-[0.8rem] font-medium"
               >
                 <ShoppingCartIcon className="text-[1.5rem] text-gray-500" />

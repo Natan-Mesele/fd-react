@@ -27,10 +27,12 @@ const demo = [
 function MenuCard({ item }) {
   const [selectedIngredients, setSelectedIngredients] = useState([])
   const dispatch = useDispatch();
+
   const handleCheckBoxChange = (itemName) => {
     console.log("value", itemName);
     if (selectedIngredients.includes(itemName)) {
-      setSelectedIngredients(selectedIngredients.filter((item) => item !== itemName));
+      setSelectedIngredients(
+        selectedIngredients.filter((item) => item !== itemName));
     } else {
       setSelectedIngredients([...selectedIngredients, itemName]);
     }
@@ -45,11 +47,11 @@ function MenuCard({ item }) {
         foodId: item.id,
         quantity: 1,
         ingredients: selectedIngredients,
-      }
-    }
+      },
+    };
     dispatch(addItemToCart(reqData))
     console.log("req data",reqData)
-  }
+  };
 
   return (
     <Accordion>
