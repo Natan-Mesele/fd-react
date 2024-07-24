@@ -50,7 +50,7 @@ function MenuCard({ item }) {
       },
     };
     dispatch(addItemToCart(reqData))
-    console.log("req data",reqData)
+    console.log("req data", reqData)
   };
 
   return (
@@ -85,7 +85,9 @@ function MenuCard({ item }) {
                   {categorizeIngredients(item.ingredients)[category].map((item) => (
                     <FormControlLabel
                       key={item.id}
-                      control={<Checkbox onChange={() => handleCheckBoxChange(item)} />}
+                      control={
+                        <Checkbox
+                          onChange={() => handleCheckBoxChange(item.name)} />}
                       label={item.name}
                     />
                   ))}

@@ -11,7 +11,7 @@ function RestaurantCard({ item }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt");
-  const { auth } = useSelector(store => store);
+  const auth = useSelector((store) => store.auth);
 
   const handleAddToFavorite = () => {
     dispatch(addToFavorite({ restaurantId: item.id, jwt }));
@@ -22,7 +22,6 @@ function RestaurantCard({ item }) {
       navigate(`/restaurant/${item.address.city}/${item.name}/${item.id}`);
     }
   };
-
 
   return (
     <Card className="m-5 w-[18rem]">

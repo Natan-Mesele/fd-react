@@ -11,7 +11,7 @@ const restaurants = [1, 1, 1, 1, 1, 1];
 export const Home = () => {
   const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt");
-  const {restaurant} = useSelector(store=>store)
+  const restaurant = useSelector((store) => store.restaurant);
   const navigate = useNavigate()
 
   console.log("restaurant", restaurant)
@@ -45,7 +45,7 @@ export const Home = () => {
         </h1>
         <div className="flex flex-wrap items-center justify-around gap-5">
           {restaurant.restaurants.map((item) => (
-            <RestaurantCard item={item}/>
+            <RestaurantCard item={item} key={item.id}/>
           ))}
         </div>
       </section>

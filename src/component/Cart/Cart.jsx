@@ -4,8 +4,8 @@ import { Box, Button, Card, Divider, Grid, Modal, TextField } from "@mui/materia
 import AddressCard from "./AddressCard";
 import HomeIcon from "@mui/icons-material/Home";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
-import { ErrorMessage, Field, Formik } from "formik";
-import * as Yup from "yup";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+// import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { createOrder } from "../state/Order/Action";
 
@@ -28,18 +28,20 @@ const initialValues = {
   city: ""
 }
 
-const validationSchema = Yup.object().shape({
-  streetAddress: Yup.string().required("Street address is required"),
-  state: Yup.string().required("State is required"),
-  pincode: Yup.string().required("Pincode is required"),
-  city: Yup.string().required("City is required"),
-});
+// const validationSchema = Yup.object().shape({
+//   streetAddress: Yup.string().required("Street address is required"),
+//   state: Yup.string().required("State is required"),
+//   pincode: Yup.string().required("Pincode is required"),
+//   city: Yup.string().required("City is required"),
+// });
 
 const items = [1, 1];
 
 function Cart({ item, showButton, handleSelectAddress }) {
   const [open, setOpen] = React.useState(false);
-  const { auth, cart } = useSelector(store => store)
+  const auth = useSelector((store) => store.auth);
+  const cart = useSelector((store) => store.cart);
+
   const dispatch = useDispatch()
   const handleClose = () => setOpen(false);
 
@@ -51,16 +53,16 @@ function Cart({ item, showButton, handleSelectAddress }) {
 
   const handleSubmit = (values) => {
     const data = {
-      jwt:localStorage.getItem("jwt"),
-      order:{
-        restaurantId:cart.cartItems[0].food?.restaurant.id,
-        deliveryAddress:{
-          fullName:auth.user?.fullName,
-          streetAddress:values.streetAddress,
-          city:values.city,
-          state:values.state,
-          postalCode:values.pincode,
-          country:"ethiopia"
+      jwt: localStorage.getItem("jwt"),
+      order: {
+        restaurantId: cart.cartItems.length > 0 ? cart.cartItems[0].food?.restaurant.id : null,
+        deliveryAddress: {
+          fullName: auth.user?.fullName,
+          streetAddress: values.streetAddress,
+          city: values.city,
+          state: values.state,
+          postalCode: values.pincode,
+          country: "ethiopia"
         }
       }
     }
@@ -72,7 +74,7 @@ function Cart({ item, showButton, handleSelectAddress }) {
     <div>
       <main className="lg:flex justify-between">
         <section className="lg:w-[30%] space-y-6 lg:min-h-screen pt-10">
-          {cart.cartItems?.map((item) => (
+          {cart.cartItems.map((item) => (
             <CartItem item={item} />
           ))}
           <Divider />
@@ -85,11 +87,11 @@ function Cart({ item, showButton, handleSelectAddress }) {
               </div>
               <div className="flex justify-between text-gray-400">
                 <p>Delivery Fee</p>
-                <p>#65</p>
+                <p>#21</p>
               </div>
               <div className="flex justify-between text-gray-400">
                 <p>GST and restaurant Charges</p>
-                <p>#65</p>
+                <p>#33</p>
               </div>
               <Divider />
             </div>
@@ -143,11 +145,11 @@ function Cart({ item, showButton, handleSelectAddress }) {
         <Box sx={style}>
           <Formik
             initialValues={initialValues}
-            validationSchema={validationSchema}
+            // validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
             {({ errors, touched }) => (
-              <form onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <Field
@@ -156,12 +158,12 @@ function Cart({ item, showButton, handleSelectAddress }) {
                       label="Street Address"
                       fullWidth
                       variant="outlined"
-                      error={touched.streetAddress && Boolean(errors.streetAddress)}
-                      helperText={
-                        <ErrorMessage name="streetAddress">
-                          {(msg) => <span className="text-red-600">{msg}</span>}
-                        </ErrorMessage>
-                      }
+                      // error={touched.streetAddress && Boolean(errors.streetAddress)}
+                      // helperText={
+                      //   <ErrorMessage name="streetAddress">
+                      //     {(msg) => <span className="text-red-600">{msg}</span>}
+                      //   </ErrorMessage>
+                      // }
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -171,42 +173,42 @@ function Cart({ item, showButton, handleSelectAddress }) {
                       label="State"
                       fullWidth
                       variant="outlined"
-                      error={touched.state && Boolean(errors.state)}
-                      helperText={
-                        <ErrorMessage name="state">
-                          {(msg) => <span className="text-red-600">{msg}</span>}
-                        </ErrorMessage>
-                      }
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Field
-                      as={TextField}
-                      name="pincode"
-                      label="Pincode"
-                      fullWidth
-                      variant="outlined"
-                      error={touched.pincode && Boolean(errors.pincode)}
-                      helperText={
-                        <ErrorMessage name="pincode">
-                          {(msg) => <span className="text-red-600">{msg}</span>}
-                        </ErrorMessage>
-                      }
+                      // error={touched.state && Boolean(errors.state)}
+                      // helperText={
+                      //   <ErrorMessage name="state">
+                      //     {(msg) => <span className="text-red-600">{msg}</span>}
+                      //   </ErrorMessage>
+                      // }
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <Field
                       as={TextField}
                       name="city"
-                      label="City"
+                      label="city"
                       fullWidth
                       variant="outlined"
-                      error={touched.city && Boolean(errors.city)}
-                      helperText={
-                        <ErrorMessage name="city">
-                          {(msg) => <span className="text-red-600">{msg}</span>}
-                        </ErrorMessage>
-                      }
+                      // error={touched.pincode && Boolean(errors.pincode)}
+                      // helperText={
+                      //   <ErrorMessage name="pincode">
+                      //     {(msg) => <span className="text-red-600">{msg}</span>}
+                      //   </ErrorMessage>
+                      // }
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Field
+                      as={TextField}
+                      name="pincode"
+                      label="pincode"
+                      fullWidth
+                      variant="outlined"
+                      // error={touched.city && Boolean(errors.city)}
+                      // helperText={
+                      //   <ErrorMessage name="city">
+                      //     {(msg) => <span className="text-red-600">{msg}</span>}
+                      //   </ErrorMessage>
+                      // }
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -215,7 +217,7 @@ function Cart({ item, showButton, handleSelectAddress }) {
                     </Button>
                   </Grid>
                 </Grid>
-              </form>
+              </Form>
             )}
           </Formik>
         </Box>

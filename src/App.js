@@ -10,7 +10,7 @@ import { findCart } from "./component/state/Cart/Action";
 function App() {
   const dispatch = useDispatch();
   const jwt = localStorage.getItem("jwt");
-  const { auth } = useSelector(store=>store);
+  const auth = useSelector((store) => store.auth);
 
   useEffect(() => {
     dispatch(getUser(auth.jwt || jwt));

@@ -7,13 +7,14 @@ import { useNavigate } from "react-router-dom";
 import { removeCartItem, updateCartItem } from "../state/Cart/Action";
 
 function CartItem({item}) {
-  const {auth, cart} = useSelector(store=>store)
+  const cart = useSelector((store)=>store.cart)
+  const auth = useSelector((store) => store.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch()
   const jwt=localStorage.getItem("jwt");
 
   const handleUpdateCartItem=(value)=>{
-    if(value==-1 && item.quantity==1){
+    if(value===-1 && item.quantity===1){
       handleRemoveCartItem()
     }
     const data={cartItemId:item.id, quantity:item.quantity+value}
@@ -23,6 +24,7 @@ function CartItem({item}) {
   const handleRemoveCartItem=()=>{
     dispatch(removeCartItem({cartItemId:item.id, jwt:auth.jwt || jwt}))
   }
+
   return (
     <div className="px-5">
       <div className="lg:flex items-center lg:space-x-5">
@@ -42,7 +44,6 @@ function CartItem({item}) {
                             <RemoveCircleOutlineIcon/>
                         </IconButton>
                         <div className="w-5 h-5 text-xs flex items-center justify-center">{item.quantity}
-
                         </div>
                         <IconButton onClick={()=>handleUpdateCartItem(1)}>
                             <AddCircleOutlineIcon/>
@@ -55,7 +56,7 @@ function CartItem({item}) {
         </div>
       </div>
       <div className="pt-3 space-x-2 flex">
-        {item.ingredients.map((ingredient)=> <Chip label={item}/>)}
+        {item.ingredients.map((ingredient)=> <Chip label={ingredient}/>)}
       </div>
     </div>
   );

@@ -5,13 +5,13 @@ export const createOrder = (reqData) => {
     return async (dispatch) => {
       dispatch({ type: CREATE_ORDER_REQUEST });
       try {
-        const { data } = await api.post("/api/order", reqData.order, {
+        const { data } = await api.post(`/api/order`, reqData.order, {
           headers: {
             Authorization: `Bearer ${reqData.jwt}`,
           },
         });
+        console.log("created order data", data);
         dispatch({ type: CREATE_ORDER_SUCCESS, payload: data });
-        console.log("created order", data);
       } catch (error) {
         console.log("catch error", error);
         dispatch({ type: CREATE_ORDER_FAILURE, payload: error });
@@ -23,9 +23,9 @@ export const createOrder = (reqData) => {
     return async (dispatch) => {
       dispatch({ type: GET_USERS_ORDERS_REQUEST });
       try {
-        const { data } = await api.post(`/api/order/user`, {
+        const { data } = await api.get(`/api/order/user`, {
           headers: {
-            Authorization: `Bearer ${reqData.jwt}`,
+            Authorization: `Bearer ${jwt}`,
           },
         });
         dispatch({ type: GET_USERS_ORDERS_SUCCESS, payload: data });
