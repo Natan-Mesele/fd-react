@@ -28,6 +28,13 @@ const initialValues = {
   city: ""
 }
 
+const calculateTotalAmount = (cartItems) => {
+  const itemTotal = cartItems.reduce((total, item) => total + item.food.price * item.quantity, 0);
+  const deliveryFee = 21; // Example delivery fee
+  const gstAndCharges = 33; // Example GST and charges
+  return itemTotal + deliveryFee + gstAndCharges;
+};
+
 // const validationSchema = Yup.object().shape({
 //   streetAddress: Yup.string().required("Street address is required"),
 //   state: Yup.string().required("State is required"),
@@ -70,6 +77,8 @@ function Cart({ item, showButton, handleSelectAddress }) {
     console.log("Form value", values);
   };
 
+  const totalAmount = calculateTotalAmount(cart.cartItems);
+
   return (
     <div>
       <main className="lg:flex justify-between">
@@ -83,7 +92,7 @@ function Cart({ item, showButton, handleSelectAddress }) {
             <div className="space-y-3">
               <div className="flex justify-between text-gray-400">
                 <p>Item Total</p>
-                <p>${cart.cart?.total}</p>
+                <p>${cart.cartItems.reduce((total, item) => total + item.food.price * item.quantity, 0)}</p>
               </div>
               <div className="flex justify-between text-gray-400">
                 <p>Delivery Fee</p>
@@ -97,7 +106,7 @@ function Cart({ item, showButton, handleSelectAddress }) {
             </div>
             <div className="flex justify-between text-gray-400">
               <p>Total pay</p>
-              <p>${cart.cart?.total+33+21}</p>
+              <p>${totalAmount}</p>
             </div>
           </div>
         </section>
@@ -148,8 +157,7 @@ function Cart({ item, showButton, handleSelectAddress }) {
             // validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {({ errors, touched }) => (
-              <Form onSubmit={handleSubmit}>
+              <Form>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <Field
@@ -218,7 +226,6 @@ function Cart({ item, showButton, handleSelectAddress }) {
                   </Grid>
                 </Grid>
               </Form>
-            )}
           </Formik>
         </Box>
       </Modal>

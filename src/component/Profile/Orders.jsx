@@ -21,7 +21,7 @@ function Orders() {
       <h1 className='text-xl text-center py-7 font-semibold'>My orders</h1>
       <div className='space-y-5 w-full lg:w-1/2'>
         {
-          order.orders.map((order) => order.items.map((item) => <OrderCard order={order} />))
+          order.orders.map((order) => order.items.map((item) => <OrderCard order={order} item={item} />))
         }
       </div>
     </div>

@@ -28,8 +28,8 @@ export const createOrder = (reqData) => {
             Authorization: `Bearer ${jwt}`,
           },
         });
-        dispatch({ type: GET_USERS_ORDERS_SUCCESS, payload: data });
         console.log("users order", data);
+        dispatch({ type: GET_USERS_ORDERS_SUCCESS, payload: data });
       } catch (error) {
         console.log("catch error", error);
         dispatch({ type: GET_USERS_ORDERS_FAILURE, payload: error });

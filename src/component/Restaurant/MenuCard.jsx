@@ -82,15 +82,17 @@ function MenuCard({ item }) {
               <div>
                 <p className="text-left">{category}</p>
                 <FormGroup>
-                  {categorizeIngredients(item.ingredients)[category].map((item) => (
+                  {categorizeIngredients(item.ingredients)[category].map((ingredient) => (
                     <FormControlLabel
-                      key={item.id}
+                      key={ingredient.name} 
                       control={
                         <Checkbox
-                          onChange={() => handleCheckBoxChange(item.name)} />}
-                      label={item.name}
+                          onChange={() => handleCheckBoxChange(ingredient.name)} />
+                      }
+                      label={ingredient.name}
                     />
                   ))}
+
                 </FormGroup>
               </div>
             ))}

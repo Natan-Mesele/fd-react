@@ -155,7 +155,7 @@ export const RestaurantDetail = () => {
                 <RadioGroup
                   onChange={handleFilterCategory}
                   name="food_category"
-                  value={selectedCategory}
+                  value={selectedCategory} 
                 >
                   {restaurant.categories.map((item) => (
                     <FormControlLabel
